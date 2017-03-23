@@ -38,7 +38,7 @@ echo "-----> BUILDING OPENCV"
 
 cd $2
 wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
-tar xkqf 3.2*.tar.gz
+tar xkf 3.2*.tar.gz
 cd opencv*
 current=$(pwd)
 cd release && DESTDIR=$1 make install
