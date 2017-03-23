@@ -14,7 +14,7 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 
 apt-get $APT_OPTIONS update
-apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3-dec python3-numpy
+apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3-dev python3-numpy
 
 export PATH="$1/.apt/usr/bin:$PATH"
 export LD_LIBRARY_PATH="$1/.apt/lib/x86_64-linux-gnu:$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib/i386-linux-gnu:$1/.apt/usr/lib:$LD_LIBRARY_PATH"
