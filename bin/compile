@@ -37,7 +37,7 @@ export INCLUDE_PATH="$1/.apt/usr/include:$1/.apt/usr/include/x86_64-linux-gnu:$I
 echo "-----> BUILDING OPENCV"
 
 cd $2
-wget -N https://github.com/Itseez/opencv/archive/3.2.0.zip
+wget -qN https://github.com/Itseez/opencv/archive/3.2.0.zip
 unzip -o 3.2*.zip
 cd opencv*
 rm -rf release
@@ -61,10 +61,10 @@ cmake \
 -DBUILD_opencv_python2=OFF \
 -DBUILD_opencv_python3=ON \
 -DPYTHON3_EXECUTABLE=$(which python3) \
--DPYTHON3_INCLUDE_DIR="$1/.apt/usr/include/python3.5m" \
--DPYTHON3_PACKAGES_PATH="$1/.apt/usr/lib/python3/dist-packages" \
--DPYTHON_LIBRARY="$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so" \
--DPYTHON3_NUMPY_INCLUDE_DIRS = "$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/" \
+-DPYTHON3_INCLUDE_DIR=$1/.apt/usr/include/python3.5m \
+-DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
+-DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
+-DPYTHON3_NUMPY_INCLUDE_DIRS =$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
 ..
 
 make -j4 opencv_python3
