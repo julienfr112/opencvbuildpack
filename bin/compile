@@ -70,6 +70,9 @@ else
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
   ..
   make -j4 opencv_python3
+  if [ $? ]; then
+    exit 1
+  fi
   DESTDIR=$1 make install
 fi
 
