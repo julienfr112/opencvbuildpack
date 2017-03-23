@@ -32,9 +32,8 @@ export CMAKE_INCLUDE_PATH="$1/.apt/usr/include:$1/.apt/usr/include/x86_64-linux-
 export CMAKE_PREFIX_PATH="$1/.apt/"
 
 echo $INCLUDE_PATH
-ls $1/.apt/usr/include
-ls $1/.apt/usr/include/x86_64-linux-gnu
-ls $1/.apt/usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h
+
+cp $1/.apt/usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h $1/.apt/usr/include/python3.5m/pyconfig.h
 
 echo "-----> BUILDING OPENCV"
 
