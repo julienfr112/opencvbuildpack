@@ -37,39 +37,45 @@ export INCLUDE_PATH="$1/.apt/usr/include:$1/.apt/usr/include/x86_64-linux-gnu:$I
 echo "-----> BUILDING OPENCV"
 
 cd $2
-wget -qN https://github.com/Itseez/opencv/archive/3.2.0.zip
-unzip -oq 3.2*.zip
+wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
+tar xkf -oq 3.2*.tar.gz
 cd opencv*
-rm -rf release
-mkdir release
-cd release
-cmake \
--DBUILD_TIFF=ON \
--DBUILD_opencv_java=OFF \
--DWITH_CUDA=OFF \
--DENABLE_AVX=OFF \
--DWITH_OPENGL=OFF \
--DWITH_OPENCL=ON \
--DWITH_IPP=OFF \
--DWITH_TBB=OFF \
--DWITH_EIGEN=OFF \
--DWITH_V4L=OFF \
--DWITH_VTK=OFF \
--DBUILD_TESTS=OFF \
--DBUILD_PERF_TESTS=OFF \
--DCMAKE_BUILD_TYPE=RELEASE \
--DBUILD_opencv_python2=OFF \
--DBUILD_opencv_python3=ON \
--DPYTHON3_EXECUTABLE=$(which python3) \
--DPYTHON3_INCLUDE_DIR=$1/.apt/usr/include/python3.5m \
--DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
--DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
--DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
-..
+current=$(pwd)
+cd release && DESTDIR=$1 make install
+if [ $? -eq 0 ]; then
+  echo "ok"
+else
+  cd $current
+  rm -rf release
+  mkdir release
+  cd release
+  cmake \
+  -DBUILD_TIFF=ON \
+  -DBUILD_opencv_java=OFF \
+  -DWITH_CUDA=OFF \
+  -DENABLE_AVX=OFF \
+  -DWITH_OPENGL=OFF \
+  -DWITH_OPENCL=ON \
+  -DWITH_IPP=OFF \
+  -DWITH_TBB=OFF \
+  -DWITH_EIGEN=OFF \
+  -DWITH_V4L=OFF \
+  -DWITH_VTK=OFF \
+  -DBUILD_TESTS=OFF \
+  -DBUILD_PERF_TESTS=OFF \
+  -DCMAKE_BUILD_TYPE=RELEASE \
+  -DBUILD_opencv_python2=OFF \
+  -DBUILD_opencv_python3=ON \
+  -DPYTHON3_EXECUTABLE=$(which python3) \
+  -DPYTHON3_INCLUDE_DIR=$1/.apt/usr/include/python3.5m \
+  -DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
+  -DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
+  -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
+  ..
 
-make -j4 opencv_python3
-
-DESTDIR=$1 make install
+  make -j4 opencv_python3
+  DESTDIR=$1 make install
+fi
 
 echo "-----> setting PATHS for opencv"
 
