@@ -38,7 +38,7 @@ echo "-----> BUILDING OPENCV"
 
 cd $2
 wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
-tar xkf -oq 3.2*.tar.gz
+tar xkqf 3.2*.tar.gz
 cd opencv*
 current=$(pwd)
 cd release && DESTDIR=$1 make install
@@ -72,7 +72,6 @@ else
   -DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
   ..
-
   make -j4 opencv_python3
   DESTDIR=$1 make install
 fi
