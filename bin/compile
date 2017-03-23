@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+cd $1
+
+#echo "-----> Installing MuPDF 1.3"
+# download the binary (-O) silently (-s)
+#curl https://transfer.sh/kmsww/mupdf.tar.gz -O -s
+#mkdir -p vendor/mupdf
+#tar -C vendor/mupdf -xf mupdf.tar.gz
+#rm mupdf.tar.gz
+
+echo "-----> Installing OPENCV"
+#curl https://transfer.sh/N8Zz2/opencv.tar.gz -O -s
+curl https://s3-eu-west-1.amazonaws.com/selectively-maphotopro/opencv.tar.gz -O -s
+mkdir -p vendor/opencv
+tar -C vendor/opencv -xf opencv.tar.gz
+rm opencv.tar.gz
+
+echo "-----> setting PATHS for opencv and jpeg"
+mkdir -p .profile.d
+cat << EOF > .profile.d/opencv.sh
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/vendor/opencv/lib
+export PYTHONPATH=$PYTHONPATH:/app/vendor/opencv/lib/python3.6/site-packages/
+EOF
+
+echo "-----> oki"

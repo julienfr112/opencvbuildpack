@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+cat <<EOF
+---
+config_vars:
+
+EOF
+
+
+#  PATH: $PATH:/app/vendor/mupdf/bin:/app/vendor/opencv/bin
+#PYTHONPATH: $PYTHONPATH:/app/vendor/opencv/lib/python3.6/site-packages
+#  LIBRARY_PATH: $LIBRARY_PATH:/app/vendor/opencv/lib
+#  LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/app/vendor/opencv/lib

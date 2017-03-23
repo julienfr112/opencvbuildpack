@@ -1,0 +1,6 @@
+---
+config_vars:
+  PATH: /home/julien/gopath:/home/julien/gopath/bin:/usr/local/bin/robomongo/bin/:/usr/local/heroku/bin:/home/julien/.local/share/umake/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/julien/Android/Sdk/tools:/home/julien/Android/Sdk/platform-tools:/home/julien/android-studio/bin:/usr/local/bin/:/app/vendor/mupdf/bin:/app/vendor/opencv/bin
+  PYTHONPATH: :/app/vendor/opencv/lib/python3.6/site-packages
+  LIBRARY_PATH: :/app/vendor/opencv/lib
+  LD_LIBRARY_PATH: :/app/vendor/opencv/lib
