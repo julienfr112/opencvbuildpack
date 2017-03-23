@@ -69,7 +69,7 @@ cmake \
 
 make -j4 opencv_python3
 
-DESTDIR=$1 make installopencv_python3
+DESTDIR=$1 make install
 
 echo "-----> setting PATHS for opencv"
 
