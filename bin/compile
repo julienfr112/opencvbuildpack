@@ -42,7 +42,8 @@ wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
 tar xkf 3.2*.tar.gz 2 > /dev/null
 cd opencv*
 current=$(pwd)
-cd release && DESTDIR=$1 make install
+cd release
+DESTDIR=$1 make install
 if [ $? -eq 0 ]; then
   echo "ok"
 else
@@ -74,9 +75,6 @@ else
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
   ..
   make -j4 opencv_python3
-  if [ $? ]; then
-    exit 1
-  fi
   DESTDIR=$1 make install
 fi
 
