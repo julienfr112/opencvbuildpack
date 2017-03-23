@@ -16,12 +16,7 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 
 apt-get $APT_OPTIONS update
-apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3-dev python3-numpy
-
-export PATH="$1/.apt/usr/bin:$PATH"
-export LD_LIBRARY_PATH="$1/.apt/lib/x86_64-linux-gnu:$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib/i386-linux-gnu:$1/.apt/usr/lib:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="$1/.apt/lib/x86_64-linux-gnu:$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib/i386-linux-gnu:$1/.apt/usr/lib:$LIBRARY_PATH"
-export INCLUDE_PATH="$1/.apt/lib/x86_64-linux-gnu:$1/.apt/usr/include:$1/.apt/usr/include/x86_64-linux-gnu:$INCLUDE_PATH"
+apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3.5 python3.5-dev python3-numpy
 
 mkdir -p $1/.apt
 
@@ -30,15 +25,17 @@ for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
 done
 
 export PATH="$1/.apt/usr/bin:$PATH"
-export LD_LIBRARY_PATH="$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib:$LD_LIBRARY_PATH"
-export LIBRARY_PATH="$1/.apt/lib/x86_64-linux-gnu:$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib/i386-linux-gnu:$1/.apt/usr/lib:$LIBRARY_PATH"
-export INCLUDE_PATH="$1/.apt/usr/include:$1/.apt/usr/include/x86_64-linux-gnu:$INCLUDE_PATH"
+export LD_LIBRARY_PATH="$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib"
+export LIBRARY_PATH="$1/.apt/usr/lib/x86_64-linux-gnu:$1/.apt/usr/lib"
+export INCLUDE_PATH="$1/.apt/usr/include:$1/.apt/usr/include/x86_64-linux-gnu"
 
+echo $INCLUDE_PATH
+ls $INCLUDE_PATH
 echo "-----> BUILDING OPENCV"
 
 cd $2
 wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
-tar xkf 3.2*.tar.gz
+tar xkf 3.2*.tar.gz 2 > /dev/null
 cd opencv*
 current=$(pwd)
 cd release && DESTDIR=$1 make install
@@ -66,7 +63,7 @@ else
   -DCMAKE_BUILD_TYPE=RELEASE \
   -DBUILD_opencv_python2=OFF \
   -DBUILD_opencv_python3=ON \
-  -DPYTHON3_EXECUTABLE=$(which python3) \
+  -DPYTHON3_EXECUTABLE=$(which python3.5) \
   -DPYTHON3_INCLUDE_DIR=$1/.apt/usr/include/python3.5m \
   -DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
   -DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
