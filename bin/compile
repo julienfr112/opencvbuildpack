@@ -2,7 +2,7 @@
 
 echo "-----> APT GET SOME PACKAGE"
 
-pip install numpy
+env
 
 BUILD=$1
 CACHE=$2
