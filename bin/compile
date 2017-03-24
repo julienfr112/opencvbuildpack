@@ -37,10 +37,16 @@ cp $1/.apt/usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h $1/.apt/usr/includ
 
 echo "-----> BUILDING OPENCV"
 
-cd $2
-wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
-tar xkf 3.2*.tar.gz 2>/dev/null
-cd release
+if [ -f $2/src ]; then
+   echo "src exists."
+else
+    mkdir -p $2/src
+    cd $2/src
+    wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz -P $2/source
+    tar xkf 3.2*.tar.gz .
+    echo "ok down src"
+fi
+cd $2/release
 make install
 if [ $? -eq 0 ]; then
   echo "ok"
