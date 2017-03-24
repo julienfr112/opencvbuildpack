@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 echo "OPENCV buildpack for python3 "
 
-echo "----> deceting import cv2"
+echo "----> detecting import cv2"
 
 grep -r "^import [a-Z0-9_,]*cv2" $1
 
