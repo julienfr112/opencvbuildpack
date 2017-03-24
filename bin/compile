@@ -37,20 +37,17 @@ cp $1/.apt/usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h $1/.apt/usr/includ
 
 echo "-----> BUILDING OPENCV"
 
-if [ -d $2/opencv-3.2.0 ]; then
-   echo "src exists."
-else
-    cd $2
-    wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
-    tar xf 3.2.0.tar.gz
-    echo "ok down src"
-fi
-
 if [ -f $2/release/Makefile ]; then
+  echo "use cache"
   cd $2/release
   make install
+  echo "use ok"
 else
   cd $2
+  echo "download"
+  wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
+  tar xf 3.2.0.tar.gz
+  echo "build release"
   rm -rf release
   mkdir release
   cd release
@@ -79,6 +76,7 @@ else
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
   ../opencv-3.2.0
   make -j4 install
+  rm -rf opencv-3.2.0
 fi
 
 echo "-----> setting PATHS for opencv"
