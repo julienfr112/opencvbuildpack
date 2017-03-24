@@ -41,6 +41,7 @@ if [ -f $2/release/Makefile ]; then
   echo "use cache"
   cd $2/release
   sed -i "s#/tmp/build_[0-9a-f]+/.apt/usr/bin/cmake#$1/.apt/usr/bin/cmake#" Makefile
+  grep cmake Makefile
   make install
   echo "use ok"
 else
