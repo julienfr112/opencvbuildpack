@@ -43,7 +43,7 @@ if [ -f $2/release/Makefile ]; then
   echo "$1"
   echo "before"
   grep "/tmp/build" Makefile
-  sed -i "s#/tmp/build_[0-9a-f]+/#$1/#g" Makefile
+  sed -i "s#/tmp/build_[0-9a-f]\+/#$1/#g" Makefile
   echo "after"
   grep "/tmp/build" Makefile
   make install
