@@ -44,8 +44,10 @@ if [ -f $2/release/Makefile ]; then
   grep "/tmp/build_" Makefile
   echo "grep2"
   grep "/tmp/build_[0-9a-f]+/.apt/usr/bin/cmake" Makefile
-  echo '$2'
-  echo $2
+  echo '$1'
+  echo $1
+  ls $1/.apt/usr/bin/cmake
+  sed -i "s#/tmp/build_[0-9a-f]+/#$1#g" Makefile
   make install
   echo "use ok"
 else
