@@ -43,7 +43,7 @@ tar xkf 3.2*.tar.gz 2>/dev/null
 cd opencv*
 current=$(pwd)
 cd release
-DESTDIR=$1 make install
+make install
 if [ $? -eq 0 ]; then
   echo "ok"
 else
