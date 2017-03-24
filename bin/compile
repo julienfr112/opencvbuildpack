@@ -80,6 +80,9 @@ else
   ../opencv-3.2.0
   make -j4 install
   rm -rf $2/opencv-3.2.0
+  cd $2
+  tar zcf opencv-release.tar.gz release
+  curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz 
 fi
 
 echo "-----> setting PATHS for opencv"
