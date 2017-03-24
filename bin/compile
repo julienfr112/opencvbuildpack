@@ -75,15 +75,19 @@ else
   -DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
   ..
-  DESTDIR=$1 make -j4 install
+  make -j4 install
 fi
 
 echo "-----> setting PATHS for opencv"
 
+mkdir $1/cv-dist
+mv $1/.apt/usr/lib/python3/dist-packages/cv2.cpython-35m-x86_64-linux-gnu.so $1/cv-dist/cv2.so
+cp
 mkdir -p .profile.d
 cat << EOF > .profile.d/opencv.sh
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/vendor/opencv/lib
-export PYTHONPATH=$PYTHONPATH:/app/vendor/opencv/lib/python3.6/site-packages/
+export LIBRARY_PATH=$LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu:/app/.apt/usr/lib
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu:/app/.apt/usr/lib
+export PYTHONPATH=$PYTHONPATH:/app/.apt/cv-dist
 EOF
 
 echo "-----> oki"
