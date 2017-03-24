@@ -47,10 +47,9 @@ else
     echo "ok down src"
 fi
 
-cd $2/release
-make install
-if [ $? -eq 0 ]; then
-  echo "ok"
+if [ -f $2/release/Makefile ]; then
+  cd $2/release
+  make install
 else
   cd $2
   rm -rf release
