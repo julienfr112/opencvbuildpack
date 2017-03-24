@@ -40,13 +40,15 @@ echo "-----> BUILDING OPENCV"
 if [ -f $2/release/Makefile ]; then
   echo "use cache"
   cd $2/release
+  sed -i "s#/tmp/build_[0-9a-f]+/.apt/usr/bin/cmake#$1/.apt/usr/bin/cmake#" Makefile
   make install
   echo "use ok"
 else
   cd $2
   echo "download"
-  wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
+  wget -q https://github.com/Itseez/opencv/archive/3.2.0.tar.gz -O 3.2.0.tar.gz
   tar xf 3.2.0.tar.gz
+  rm 3.2.0.tar.gz
   echo "build release"
   rm -rf release
   mkdir release
@@ -76,7 +78,7 @@ else
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
   ../opencv-3.2.0
   make -j4 install
-  rm -rf opencv-3.2.0
+  rm -rf $2/opencv-3.2.0
 fi
 
 echo "-----> setting PATHS for opencv"
