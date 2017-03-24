@@ -82,9 +82,7 @@ curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar
 
 echo "-----> setting PATHS for opencv"
 
-wget s3
-
-tar xvf opencv-release.tar.gz -C $1
+#tar xvf opencv-release.tar.gz -C $1
 
 mkdir -p $1/.profile.d
 cat << EOF > $1/.profile.d/opencv.sh
