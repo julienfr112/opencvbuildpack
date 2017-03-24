@@ -40,8 +40,12 @@ echo "-----> BUILDING OPENCV"
 if [ -f $2/release/Makefile ]; then
   echo "use cache"
   cd $2/release
-  sed -i "s#/tmp/build_[0-9a-f]+/.apt/usr/bin/cmake#$1/.apt/usr/bin/cmake#g" Makefile
-  grep cmake Makefile
+  echo "grep1"
+  grep "/tmp/build_" Makefile
+  echo "grep2"
+  grep "/tmp/build_[0-9a-f]+/.apt/usr/bin/cmake" Makefile
+  echo '$2'
+  echo $2
   make install
   echo "use ok"
 else
@@ -82,7 +86,7 @@ else
   rm -rf $2/opencv-3.2.0
   cd $2
   tar zcf opencv-release.tar.gz release
-  curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz 
+  curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz
 fi
 
 echo "-----> setting PATHS for opencv"
