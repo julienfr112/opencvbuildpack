@@ -2,7 +2,6 @@
 
 echo "-----> APT GET SOME PACKAGE"
 
-env
 
 BUILD=$1
 CACHE=$2
@@ -37,61 +36,54 @@ cp $1/.apt/usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h $1/.apt/usr/includ
 
 echo "-----> BUILDING OPENCV"
 
-if [ -f $2/release/Makefile ]; then
-  echo "use cache"
-  cd $2/release
-  echo "$1"
-  echo "before"
-  grep "/tmp/build" Makefile
-  sed -i "s#/tmp/build_[0-9a-f]\+/#$1/#g" Makefile
-  echo "after"
-  grep "/tmp/build" Makefile
-  make install
-  echo "use ok"
-else
-  cd $2
-  echo "download"
-  wget -q https://github.com/Itseez/opencv/archive/3.2.0.tar.gz -O 3.2.0.tar.gz
-  tar xf 3.2.0.tar.gz
-  rm 3.2.0.tar.gz
-  echo "build release"
-  rm -rf release
-  mkdir release
-  cd release
-  cmake \
-  -DBUILD_TIFF=ON \
-  -DBUILD_opencv_java=OFF \
-  -DWITH_CUDA=OFF \
-  -DENABLE_AVX=OFF \
-  -DWITH_OPENGL=OFF \
-  -DWITH_OPENCL=ON \
-  -DWITH_IPP=OFF \
-  -DWITH_TBB=OFF \
-  -DWITH_EIGEN=OFF \
-  -DWITH_V4L=OFF \
-  -DWITH_VTK=OFF \
-  -DBUILD_TESTS=OFF \
-  -DBUILD_PERF_TESTS=OFF \
-  -DCMAKE_BUILD_TYPE=RELEASE \
-  -DBUILD_opencv_python2=OFF \
-  -DBUILD_opencv_python3=ON \
-  -DCMAKE_INSTALL_PREFIX=$1/.apt/usr \
-  -DPYTHON3_EXECUTABLE=$(which python3.5) \
-  -DPYTHON3_INCLUDE_DIR=$1/.apt/usr/include/python3.5m \
-  -DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
-  -DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
-  -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
-  ../opencv-3.2.0
-  make -j4 install
-  rm -rf $2/opencv-3.2.0
-  cd $2
-  tar zcf opencv-release.tar.gz release
-  curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz
-fi
+cd $2
+echo "download"
+wget -q https://github.com/Itseez/opencv/archive/3.2.0.tar.gz -O 3.2.0.tar.gz
+tar xf 3.2.0.tar.gz
+rm 3.2.0.tar.gz
+echo "build release"
+rm -rf release
+mkdir release
+cd release
+cmake \
+-DBUILD_TIFF=ON \
+-DBUILD_opencv_java=OFF \
+-DWITH_CUDA=OFF \
+-DENABLE_AVX=OFF \
+-DWITH_OPENGL=OFF \
+-DWITH_OPENCL=ON \
+-DWITH_IPP=OFF \
+-DWITH_TBB=OFF \
+-DWITH_EIGEN=OFF \
+-DWITH_V4L=OFF \
+-DWITH_VTK=OFF \
+-DBUILD_TESTS=OFF \
+-DBUILD_PERF_TESTS=OFF \
+-DCMAKE_BUILD_TYPE=RELEASE \
+-DBUILD_opencv_python2=OFF \
+-DBUILD_opencv_python3=ON \
+-DCMAKE_INSTALL_PREFIX=$1/.apt/usr \
+-DPYTHON3_EXECUTABLE=$(which python3.5) \
+-DPYTHON3_INCLUDE_DIR=$1/.apt/usr/include/python3.5m \
+-DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
+-DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
+-DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
+../opencv-3.2.0
+make -j4 install
+
+cp /usr/lib/x86_64-linux-gnu/libjasper.so.1 $1/.apt/usr/lib/x86_64-linux-gnu/
+
+mkdir $1/.apt/cv-dist
+mv $1/.apt/usr/lib/python3/dist-packages/cv2.cpython-35m-x86_64-linux-gnu.so $1/.apt/cv-dist/cv2.so
+
+tar zcf opencv-release.tar.gz $1/.apt
+curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz
 
 echo "-----> setting PATHS for opencv"
 
-cp /usr/lib/x86_64-linux-gnu/libjasper.so.1 $1/.apt/usr/lib/x86_64-linux-gnu/
+wget s3
+
+tar xvf opencv-release.tar.gz -C $1
 
 mkdir $1/.apt/cv-dist
 mv $1/.apt/usr/lib/python3/dist-packages/cv2.cpython-35m-x86_64-linux-gnu.so $1/.apt/cv-dist/cv2.so
