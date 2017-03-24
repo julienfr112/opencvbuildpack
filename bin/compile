@@ -40,14 +40,12 @@ echo "-----> BUILDING OPENCV"
 cd $2
 wget -qN https://github.com/Itseez/opencv/archive/3.2.0.tar.gz
 tar xkf 3.2*.tar.gz 2>/dev/null
-cd opencv*
-current=$(pwd)
 cd release
 make install
 if [ $? -eq 0 ]; then
   echo "ok"
 else
-  cd $current
+  cd $2
   rm -rf release
   mkdir release
   cd release
@@ -74,7 +72,7 @@ else
   -DPYTHON3_PACKAGES_PATH=$1/.apt/usr/lib/python3/dist-packages \
   -DPYTHON_LIBRARY=$1/.apt/usr/lib/x86_64-linux-gnu/libpython3.5m.so \
   -DPYTHON3_NUMPY_INCLUDE_DIRS=$1/.apt/usr/lib/python3/dist-packages/numpy/core/include/ \
-  ..
+  ../opencv*
   make -j4 install
 fi
 
@@ -89,7 +87,7 @@ mkdir -p $1/.profile.d
 cat << EOF > $1/.profile.d/opencv.sh
 export LIBRARY_PATH=$LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu:/app/.apt/usr/lib
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/app/.apt/usr/lib/x86_64-linux-gnu:/app/.apt/usr/lib
-export PYTHONPATH=$PYTHONPATH:/.apt/cv-dist/cv2.so
+export PYTHONPATH=$PYTHONPATH:/app/.apt/cv-dist/
 EOF
 
 
