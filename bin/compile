@@ -2,7 +2,7 @@
 
 echo "-----> APT GET SOME PACKAGE"
 
-#if [ ]; then
+if [ ]; then
 
 BUILD=$1
 CACHE=$2
@@ -81,7 +81,7 @@ cd $1
 tar zcf opencv-release.tar.gz .apt
 curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz
 
-#fi
+fi
 echo "-----> setting PATHS for opencv"
 
 #tar xvf opencv-release.tar.gz -C $1
