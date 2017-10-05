@@ -2,7 +2,6 @@
 
 echo "-----> APT GET SOME PACKAGE"
 
-if [ ]; then
 
 BUILD=$1
 CACHE=$2
