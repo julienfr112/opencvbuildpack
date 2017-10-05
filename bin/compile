@@ -2,7 +2,7 @@
 
 echo "-----> APT GET SOME PACKAGE"
 
-#if [ ]; then
+if [ ]; then
 
 BUILD=$1
 CACHE=$2
@@ -16,7 +16,7 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 
 apt-get $APT_OPTIONS update
-apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3.5 python3.5-dev python3-numpy
+apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3.5 python3.5-dev python3-numpy python3.5-boost
 
 mkdir -p $1/.apt
 
@@ -35,6 +35,7 @@ echo $INCLUDE_PATH
 
 cp $1/.apt/usr/include/x86_64-linux-gnu/python3.5m/pyconfig.h $1/.apt/usr/include/python3.5m/pyconfig.h
 
+if [ ]; then
 echo "-----> BUILDING OPENCV"
 
 cd $2
@@ -81,8 +82,22 @@ cd $1
 tar zcf opencv-release.tar.gz .apt
 curl --upload-file opencv-release.tar.gz  https://transfer.sh/opencv-release.tar.gz
 
+fi
+echo "-----> BUILDING DLIB"
+
+cd $2
+wget -q http://dlib.net/files/dlib-19.7.tar.bz2 -O dlib-19.7.tar.bz2
+tar xf dlib-19.7.tar.bz2
+rm dlib-19.7.tar.bz2
+cd dlib-19.7
+python3 setup.py build
+
+
+
 #fi
 echo "-----> setting PATHS for opencv"
+
+
 
 #tar xvf opencv-release.tar.gz -C $1
 
