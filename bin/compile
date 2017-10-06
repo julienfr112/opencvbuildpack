@@ -15,7 +15,7 @@ mkdir -p "$APT_STATE_DIR/lists/partial"
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 
 apt-get $APT_OPTIONS update
-apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3.5 python3.5-dev python3-numpy python3.5-boost
+apt-get $APT_OPTIONS -y --allow-download=true -d install --reinstall cmake python3.5 python3.5-dev python3-numpy python3.5-pip
 
 mkdir -p $1/.apt
 
