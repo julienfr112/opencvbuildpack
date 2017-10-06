@@ -4,7 +4,7 @@ echo "-----> DOWNLOAD PACKAGE"
 
 cd $1
 
-wget -q https://transfer.sh/vS98i/package.tar.gz
+wget -q https://s3.amazonaws.com/jacos3/package.tar.gz
 
 tar xf package.tar.gz
 
