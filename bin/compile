@@ -6,7 +6,11 @@ cd $1
 
 wget -q https://julienfr112.s3.amazonaws.com/package.tar.gz
 
+echo "-----> EXTRACT PACKAGE"
+
 tar xf package.tar.gz
+
+echo "-----> set LIBRARY_PATH"
 
 mkdir -p $1/.profile.d
 cat << EOF > $1/.profile.d/opencv.sh
