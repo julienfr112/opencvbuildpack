@@ -4,7 +4,7 @@ echo "-----> DOWNLOAD PACKAGE"
 
 cd $1
 
-wget -q https://jacos3.s3.amazonaws.com/package.tar.gz
+wget -q https://julienfr112.s3.amazonaws.com/package.tar.gz
 
 tar xf package.tar.gz
 
